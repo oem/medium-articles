@@ -12,4 +12,4 @@ You require python 3.
 
 ## Articles
 
-[Sketchy Introduction to Convolutional Neural Nets](https://github.com/oem/medium-articles/tree/master/sketchy_introduction_to_cnn) - A visual introduction to some of the core concepts of convolutional neural nets
+[A Sketchy Introduction to Convolutional Neural Nets](https://github.com/oem/medium-articles/tree/master/sketchy_introduction_to_cnn) - A visual introduction to some of the core concepts of convolutional neural nets
