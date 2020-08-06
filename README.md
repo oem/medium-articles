@@ -14,7 +14,9 @@ You require python 3.
 
 ```
 cd sketchy_introduction_to_cnn
-`pip install -r requirements.txt`
+pip install -r requirements.txt
 ```
 
-### Zombie Wasps, a Pandemic, Webcrawlers and julia
+### Alien facehugger wasps, a pandemic, webcrawlers and julia
+
+[Alien facehugger wasps, a pandemic, webcrawlers and julia](https://github.com/oem/medium-articles/blob/30640de006fd29ca97394c009d30813efac65075/julia_webcrawling/webrawling.ipynb) - A little tutorial on how to write webcrawlers in julia
