@@ -12,6 +12,9 @@ You can find the articles themselves on [Medium](https://medium.com/@oem_83498).
 
 You require python 3.
 
+```
+cd sketchy_introduction_to_cnn
 `pip install -r requirements.txt`
+```
 
 ### Zombie Wasps, a Pandemic, Webcrawlers and julia
