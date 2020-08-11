@@ -211,9 +211,9 @@ version = "0.8.0"
 
 [[Gumbo_jll]]
 deps = ["Libdl", "Pkg"]
-git-tree-sha1 = "6e82eba11d88b23eafafa4355edf91abae61c205"
+git-tree-sha1 = "86111f5523d7c42da0edd85ef7999c663881ac1e"
 uuid = "528830af-5a63-567c-a44a-034ed33b8444"
-version = "0.10.1+0"
+version = "0.10.1+1"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "MbedTLS", "Sockets"]
@@ -223,7 +223,7 @@ version = "0.8.17"
 
 [[Hamburg]]
 deps = ["CSV", "Cascadia", "DataFrames", "Dates", "Gumbo", "HTTP"]
-git-tree-sha1 = "323c75e773530977c4d1ef338b72dbabba4a143f"
+git-tree-sha1 = "579ba0f66884c7d8d04df8fd12547012f7a69249"
 repo-rev = "master"
 repo-url = "https://github.com/oem/Hamburg.jl"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
