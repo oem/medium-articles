@@ -8,16 +8,21 @@ using InteractiveUtils
 begin
 	using Pkg
 	Pkg.activate(".")
-	Pkg.add("Gadfly")
-	using Hamburg
-	using Dates
-	using DataFrames
 end
+
+# ╔═╡ 9fa3d164-e24b-11ea-27c4-f579ca84aac3
+using Hamburg
+
+# ╔═╡ 9a588752-e24b-11ea-02a3-ad978111b579
+using Dates
+
+# ╔═╡ 966af7ba-e24b-11ea-333a-eb8734613400
+using DataFrames
 
 # ╔═╡ d43534e2-e1f2-11ea-2b7d-654863a51ee3
 begin
 	using Gadfly
-	Gadfly.set_default_plot_size(800px, 300px)
+	Gadfly.set_default_plot_size(680px, 300px)
 end
 
 # ╔═╡ 295ffb50-e207-11ea-3095-550122a52bcf
@@ -64,11 +69,16 @@ select!(boroughs, Not(:recordedat))
 # ╔═╡ e664290c-e1f2-11ea-27f2-7fbc16af7f19
 mat_boroughs = convert(Matrix, boroughs)
 
+# ╔═╡ c3adcd30-e249-11ea-0c86-03094a96cb2f
+DataFrames.rename!(boroughs, "Hamburg Mitte" => "Mitte")
+
 # ╔═╡ eaa31474-e1f2-11ea-1e01-a1d50df4fcec
 plot(x=names(boroughs), y=mat_boroughs[1, :], Geom.bar, Theme(bar_spacing=10mm), Guide.xlabel("Boroughs"), Guide.ylabel("New infections"))
 
 # ╔═╡ 762f1336-e206-11ea-3766-fd9b1a991e99
 md"""
+The first dataset shows the infections per borough, aggregated for 14 days. The aggregation happens to protect the privacy of the infected people.
+
 Ok, let's see what else we can find out from our data.
 """
 
@@ -78,7 +88,7 @@ md"""
 
 Just diving into the data and start exploring a new dataset can be a lot of fun! 
 
-Maybe you already have questions that can guide you in your exploration, or you have set yourself a concrete goal like, **"proof this and that"**, **"show the relationship between..."**, or **"create a report for monthly traffic of the website"**. Great, then you have your work cut out for you (though it might not be as much fun as freestyle exploration of a new dataset).
+Maybe you already have questions that can guide you in your exploration, or you have set yourself a concrete goal like, **"prove this and that"**, **"show the relationship between..."**, or **"create a report for monthly traffic of the website"**. Great, then you have your work cut out for you (though it might not be as much fun as freestyle exploration of a new dataset).
 
 Sometimes though, we don't know yet exactly what questions we want to even ask. Where to start then?
 
@@ -100,23 +110,23 @@ end
 
 # ╔═╡ 9879e5ba-e206-11ea-198c-c93264c4720b
 begin
-	l1 = borough_plot(names(boroughs), mat_boroughs[1, :], Theme(default_color="#ffcf33", bar_spacing=10mm))
-	l2 = borough_plot(names(boroughs), mat_boroughs[2, :], Theme(default_color="orange", bar_spacing=10mm))
-	l3 = borough_plot(names(boroughs), mat_boroughs[3, :], Theme(default_color="red", bar_spacing=10mm))
-	l4 = borough_plot(names(boroughs), mat_boroughs[end, :], Theme(default_color="purple", bar_spacing=10mm))
+	l1 = borough_plot(names(boroughs), mat_boroughs[1, :], Theme(default_color="#ffcf33", bar_spacing=7mm))
+	l2 = borough_plot(names(boroughs), mat_boroughs[2, :], Theme(default_color="orange", bar_spacing=7mm))
+	l3 = borough_plot(names(boroughs), mat_boroughs[3, :], Theme(default_color="red", bar_spacing=7mm))
+	l4 = borough_plot(names(boroughs), mat_boroughs[end, :], Theme(default_color="purple", bar_spacing=7mm))
 
 	plot(l4, l3, l2, l1,        
 		Guide.xlabel("Boroughs"),
 		Guide.ylabel("New Infections"),
 		Guide.title("New infections in the last 14 days"),
-		Guide.manual_color_key("Time",["Now - 14 days ago", "7 - 21 days ago", "14 - 28 days ago"],["orange","red", "purple"]))
+		Guide.manual_color_key("Time",["Now - 14 days ago", "7 - 21 days ago", "14 - 28 days ago", "21 - 35 days ago"],["#ffcf33", "orange","red", "purple"]))
 end
 
 # ╔═╡ e7041002-e206-11ea-3899-6b3a3cfe771f
 df = dataset("covid-19", "infected")
 
 # ╔═╡ e9b1f99c-e206-11ea-38da-ed8fccafdc2f
-head(df, 10)
+DataFrames.head(df, 10)
 
 # ╔═╡ f8ce9a98-e206-11ea-31d6-0770158808a8
 function plotnewcases(df)
@@ -164,15 +174,36 @@ begin
 		Guide.ylabel("new cases"))
 end
 
+# ╔═╡ 726da05c-e222-11ea-0572-9113873f3c74
+md"""
+### Early signs?
+"""
+
+# ╔═╡ 76c9d308-e222-11ea-0762-43b8e2c65783
+md"""
+### What's important?
+
+#### New stuff!
+
+correlate
+"""
+
+# ╔═╡ 86e4658c-e238-11ea-26ab-1f4ea68bd363
+holidays = dataset("holidays", "school")
+
 # ╔═╡ Cell order:
 # ╟─80ca3a72-e1ec-11ea-14e0-9b6321f69aaf
 # ╟─b715770a-e1f2-11ea-296b-833ff13790b4
 # ╠═bef1d414-e1f2-11ea-3005-7d734ef29af8
+# ╠═9fa3d164-e24b-11ea-27c4-f579ca84aac3
+# ╠═9a588752-e24b-11ea-02a3-ad978111b579
+# ╠═966af7ba-e24b-11ea-333a-eb8734613400
 # ╟─cafd3f0a-e1f2-11ea-2861-fbd429841e67
 # ╠═d43534e2-e1f2-11ea-2b7d-654863a51ee3
 # ╠═e70f6018-e1f7-11ea-0b8f-8d48c9eaa94d
 # ╠═e2e0a582-e1f2-11ea-37e2-236507742cdc
 # ╠═e664290c-e1f2-11ea-27f2-7fbc16af7f19
+# ╠═c3adcd30-e249-11ea-0c86-03094a96cb2f
 # ╠═eaa31474-e1f2-11ea-1e01-a1d50df4fcec
 # ╟─762f1336-e206-11ea-3766-fd9b1a991e99
 # ╟─7c0246ac-e206-11ea-3f18-c5e9ccf73a93
@@ -190,3 +221,6 @@ end
 # ╠═d73763b0-e207-11ea-1892-cf261fa3e3fb
 # ╠═ea2fb83e-e207-11ea-0129-67e41b8501cc
 # ╠═15bf4900-e207-11ea-2a23-7314baaf6a5a
+# ╟─726da05c-e222-11ea-0572-9113873f3c74
+# ╠═76c9d308-e222-11ea-0762-43b8e2c65783
+# ╠═86e4658c-e238-11ea-26ab-1f4ea68bd363
