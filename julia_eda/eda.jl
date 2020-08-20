@@ -183,7 +183,7 @@ end
 
 # ╔═╡ f9ac39c8-e206-11ea-0fbc-1b9ca1de4635
 plot(plotnewcases(df),
-    Coord.cartesian(xmin=Date(2020, 3,1)),
+    Coord.cartesian(xmin=Date(2020, 3,1), ymin=0),
     Guide.title("Confirmed new COVID-19 cases in Hamburg, Germany"), 
     Guide.xlabel("date"), 
     Guide.ylabel("new cases"))
