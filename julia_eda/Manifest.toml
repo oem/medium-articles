@@ -223,7 +223,7 @@ version = "0.8.17"
 
 [[Hamburg]]
 deps = ["CSV", "Cascadia", "DataFrames", "Dates", "Gumbo", "HTTP"]
-git-tree-sha1 = "09931d5a64cccfa0c76bdec64483fc88f8ceccee"
+git-tree-sha1 = "91e6612be4f676670912a1814fb4a09bde79262c"
 repo-rev = "master"
 repo-url = "https://github.com/oem/Hamburg.jl"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"
@@ -436,6 +436,12 @@ deps = ["Base64", "Distributed", "HTTP", "InteractiveUtils", "Markdown", "MsgPac
 git-tree-sha1 = "f30ec37556a79cd30da9415e080c00f9c68f0392"
 uuid = "c3e4b0f8-55cb-11ea-2926-15256bba5781"
 version = "0.11.7"
+
+[[PlutoUI]]
+deps = ["Base64", "Markdown", "Random"]
+git-tree-sha1 = "1b40a7058ed8c93b3e584210c246db54749f04d6"
+uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+version = "0.6.1"
 
 [[PooledArrays]]
 deps = ["DataAPI"]

@@ -4,6 +4,15 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        el
+    end
+end
+
 # ╔═╡ bef1d414-e1f2-11ea-3005-7d734ef29af8
 begin
 	using Pkg
@@ -24,6 +33,9 @@ begin
 	using Gadfly
 	Gadfly.set_default_plot_size(680px, 300px)
 end
+
+# ╔═╡ 0b899ce4-e2bb-11ea-1a85-7bee36ef0213
+using PlutoUI
 
 # ╔═╡ 295ffb50-e207-11ea-3095-550122a52bcf
 using TimeSeries
@@ -61,10 +73,10 @@ We are going to use [Gadfly.jl](http://gadflyjl.org/stable/) again, the plots lo
 """
 
 # ╔═╡ e70f6018-e1f7-11ea-0b8f-8d48c9eaa94d
-boroughs = dataset("covid-19", "boroughs")
+boroughsovertime = dataset("covid-19", "boroughs")
 
 # ╔═╡ e2e0a582-e1f2-11ea-37e2-236507742cdc
-select!(boroughs, Not(:recordedat))
+boroughs = select(boroughsovertime, Not(:recordedat))
 
 # ╔═╡ e664290c-e1f2-11ea-27f2-7fbc16af7f19
 mat_boroughs = convert(Matrix, boroughs)
@@ -92,12 +104,17 @@ Maybe you already have questions that can guide you in your exploration, or you 
 
 Sometimes though, we don't know yet exactly what questions we want to even ask. Where to start then?
 
-Well, one thing we can explore already, is the structure of the data. In this case, we have the development of the covid-19 pandemic as a time series, which opens up plenty of possible questions.
+Well, one thing we can explore already, is the structure of the data. In this case, we have the development of the covid-19 pandemic as datapoints over time, which opens up some interesting questions.
 """
 
 # ╔═╡ 85b11818-e206-11ea-1731-61cdec0e3470
 md"""
 ### How are we doing?
+"""
+
+# ╔═╡ d536b636-e24c-11ea-2710-c3a5c7e2f267
+md"""
+#### Boroughs over time
 """
 
 # ╔═╡ 8edd85c0-e206-11ea-36d7-9fb3ce92eb67
@@ -115,11 +132,42 @@ begin
 	l3 = borough_plot(names(boroughs), mat_boroughs[3, :], Theme(default_color="red", bar_spacing=7mm))
 	l4 = borough_plot(names(boroughs), mat_boroughs[end, :], Theme(default_color="purple", bar_spacing=7mm))
 
-	plot(l4, l3, l2, l1,        
+	plot(l4, l3, l2, l1,
 		Guide.xlabel("Boroughs"),
 		Guide.ylabel("New Infections"),
 		Guide.title("New infections in the last 14 days"),
 		Guide.manual_color_key("Time",["Now - 14 days ago", "7 - 21 days ago", "14 - 28 days ago", "21 - 35 days ago"],["#ffcf33", "orange","red", "purple"]))
+end
+
+# ╔═╡ f5e067f6-e24c-11ea-3c3c-bf88fd1de331
+md"""
+#### Boroughs over time 2
+"""
+
+# ╔═╡ ba20f85c-e24c-11ea-3067-5fe2d57baf52
+md"""
+#### Boroughs over time 3
+"""
+
+# ╔═╡ 0a4c3ee8-e2bd-11ea-0ad0-1de3e6d82689
+md"""
+##### Choice! 
+
+You can select the time window via the slider:
+
+$(@bind i Slider(1:size(boroughs)[1]))
+"""
+
+# ╔═╡ eb66364a-e2bd-11ea-0157-9f55a8e415a6
+begin
+	layers = []
+	push!(layers, borough_plot(names(boroughs), mat_boroughs[i, :], Theme(bar_spacing=7mm)))
+	
+	plot(layers...,
+	Coord.cartesian(ymax=200),
+	Guide.xlabel("Boroughs"),
+	Guide.ylabel("New Infections"),
+	Guide.title(string(boroughsovertime[i, :].recordedat)))
 end
 
 # ╔═╡ e7041002-e206-11ea-3899-6b3a3cfe771f
@@ -208,8 +256,14 @@ holidays = dataset("holidays", "school")
 # ╟─762f1336-e206-11ea-3766-fd9b1a991e99
 # ╟─7c0246ac-e206-11ea-3f18-c5e9ccf73a93
 # ╟─85b11818-e206-11ea-1731-61cdec0e3470
+# ╟─d536b636-e24c-11ea-2710-c3a5c7e2f267
 # ╠═8edd85c0-e206-11ea-36d7-9fb3ce92eb67
 # ╠═9879e5ba-e206-11ea-198c-c93264c4720b
+# ╟─f5e067f6-e24c-11ea-3c3c-bf88fd1de331
+# ╟─ba20f85c-e24c-11ea-3067-5fe2d57baf52
+# ╠═0b899ce4-e2bb-11ea-1a85-7bee36ef0213
+# ╟─0a4c3ee8-e2bd-11ea-0ad0-1de3e6d82689
+# ╠═eb66364a-e2bd-11ea-0157-9f55a8e415a6
 # ╠═e7041002-e206-11ea-3899-6b3a3cfe771f
 # ╠═e9b1f99c-e206-11ea-38da-ed8fccafdc2f
 # ╠═f8ce9a98-e206-11ea-31d6-0770158808a8
