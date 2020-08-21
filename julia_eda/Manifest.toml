@@ -223,7 +223,7 @@ version = "0.8.17"
 
 [[Hamburg]]
 deps = ["CSV", "Cascadia", "DataFrames", "Dates", "Gumbo", "HTTP"]
-git-tree-sha1 = "91e6612be4f676670912a1814fb4a09bde79262c"
+git-tree-sha1 = "31bb18c582c741d02a41675d1adeff4e281d13ed"
 repo-rev = "master"
 repo-url = "https://github.com/oem/Hamburg.jl"
 uuid = "fe294631-7164-4d0f-9497-e1b4dc4640c8"

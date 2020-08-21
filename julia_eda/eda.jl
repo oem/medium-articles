@@ -28,11 +28,8 @@ using Dates
 # ╔═╡ 966af7ba-e24b-11ea-333a-eb8734613400
 using DataFrames
 
-# ╔═╡ d43534e2-e1f2-11ea-2b7d-654863a51ee3
-begin
-	using Gadfly
-	Gadfly.set_default_plot_size(680px, 300px)
-end
+# ╔═╡ b7149c2e-e3b7-11ea-387a-9966e5cd6e6a
+using Gadfly
 
 # ╔═╡ 0b899ce4-e2bb-11ea-1a85-7bee36ef0213
 using PlutoUI
@@ -71,6 +68,9 @@ Let's quickly recreate the borough plot we did last time, this time with the hel
 md"""
 We are going to use [Gadfly.jl](http://gadflyjl.org/stable/) again, the plots look great.
 """
+
+# ╔═╡ bd687668-e3b7-11ea-0385-459b528985e1
+Gadfly.set_default_plot_size(680px, 300px)
 
 # ╔═╡ e70f6018-e1f7-11ea-0b8f-8d48c9eaa94d
 boroughsovertime = dataset("covid-19", "boroughs")
@@ -215,7 +215,7 @@ begin
 	dfa = DataFrame(collapsed)[end-5:end, :]
 
 	avg = layer(x=dfa.timestamp, y=dfa.new, Geom.line, Theme(default_color="red"))
-	plot(avg, plotnewcases(df[1:30, :]),
+	plot(avg, plotnewcases(df[1:34, :]),
 		Coord.cartesian(xmin=Date(2020, 7,1)),
 		Guide.title("Confirmed new COVID-19 cases in Hamburg, Germany"), 
 		Guide.xlabel("date"), 
@@ -247,7 +247,8 @@ holidays = dataset("holidays", "school")
 # ╠═9a588752-e24b-11ea-02a3-ad978111b579
 # ╠═966af7ba-e24b-11ea-333a-eb8734613400
 # ╟─cafd3f0a-e1f2-11ea-2861-fbd429841e67
-# ╠═d43534e2-e1f2-11ea-2b7d-654863a51ee3
+# ╠═b7149c2e-e3b7-11ea-387a-9966e5cd6e6a
+# ╠═bd687668-e3b7-11ea-0385-459b528985e1
 # ╠═e70f6018-e1f7-11ea-0b8f-8d48c9eaa94d
 # ╠═e2e0a582-e1f2-11ea-37e2-236507742cdc
 # ╠═e664290c-e1f2-11ea-27f2-7fbc16af7f19
