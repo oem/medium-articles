@@ -174,7 +174,7 @@ end
 df = dataset("covid-19", "infected")
 
 # ╔═╡ e9b1f99c-e206-11ea-38da-ed8fccafdc2f
-DataFrames.head(df, 10)
+first(df, 10)
 
 # ╔═╡ f8ce9a98-e206-11ea-31d6-0770158808a8
 function plotnewcases(df)
@@ -215,7 +215,7 @@ begin
 	dfa = DataFrame(collapsed)[end-5:end, :]
 
 	avg = layer(x=dfa.timestamp, y=dfa.new, Geom.line, Theme(default_color="red"))
-	plot(avg, plotnewcases(df[1:34, :]),
+	plot(avg, plotnewcases(df[1:30, :]),
 		Coord.cartesian(xmin=Date(2020, 7,1)),
 		Guide.title("Confirmed new COVID-19 cases in Hamburg, Germany"), 
 		Guide.xlabel("date"), 
