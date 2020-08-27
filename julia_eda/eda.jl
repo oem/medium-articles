@@ -59,7 +59,9 @@ Last time, we build a [webcrawler](https://medium.com/oembot/alien-facehugger-wa
 
 This time we are going to dig a bit deeper into the data. We are not going to be bothered with getting the data, it will be provided already - kinda like having only dessert for dinner. Or a kaggle challenge.
 
-For that purpose, I went ahead and wrote a [small package, Hamburg.jl](https://github.com/oem/Hamburg.jl) that provides those numbers for all recorded days, not just a current snapshot. You can easily get it: `]add https://github.com/oem/Hamburg.jl`.
+For that purpose, I went ahead and wrote a [small package, Hamburg.jl](https://github.com/oem/Hamburg.jl) that provides those numbers for all recorded days, not just a current snapshot. You can easily get it:
+
+`]add https://github.com/oem/Hamburg.jl`.
 
 Let's quickly recreate the borough plot we did last time, this time with the help of the package (there won't be much webscraping this time).
 """
@@ -69,7 +71,7 @@ md"""
 We are going to use [Gadfly.jl](http://gadflyjl.org/stable/) again, the plots look great.
 """
 
-# ╔═╡ bd687668-e3b7-11ea-0385-459b528985e1
+# ╔═╡ f64848a0-e76d-11ea-1990-8f4b804f1e9b
 Gadfly.set_default_plot_size(680px, 300px)
 
 # ╔═╡ e70f6018-e1f7-11ea-0b8f-8d48c9eaa94d
@@ -144,6 +146,25 @@ md"""
 #### Boroughs over time 2
 """
 
+# ╔═╡ 5431e8f0-e76a-11ea-25f3-9590a086efd5
+begin
+	Gadfly.set_default_plot_size(680px, 1200px)
+	plots = map(eachcol(boroughs)) do c
+		plot(x=boroughsovertime.recordedat, 
+			y=c,
+			Geom.line,
+			Coord.cartesian(xmin=Date(2020, 7, 22), ymax=180),
+			Theme(bar_spacing=7mm))	
+	end
+	vstack(plots)
+end
+
+# ╔═╡ 0eb86234-e774-11ea-2cd0-0153ffd75aef
+names(boroughs)
+
+# ╔═╡ 4ed9b764-e76f-11ea-3da0-3d9bc46cec0f
+Gadfly.set_default_plot_size(680px, 300px)
+
 # ╔═╡ ba20f85c-e24c-11ea-3067-5fe2d57baf52
 md"""
 #### Boroughs over time 3
@@ -163,11 +184,13 @@ begin
 	layers = []
 	push!(layers, borough_plot(names(boroughs), mat_boroughs[i, :], Theme(bar_spacing=7mm)))
 	
-	plot(layers...,
-	Coord.cartesian(ymax=200),
-	Guide.xlabel("Boroughs"),
-	Guide.ylabel("New Infections"),
-	Guide.title(string(boroughsovertime[i, :].recordedat)))
+	p = plot(layers...,
+		Coord.cartesian(ymax=200),
+		Guide.xlabel("Boroughs"),
+		Guide.ylabel("New Infections"),
+		Guide.title(string(boroughsovertime[i, :].recordedat)))
+	# draw(SVG("plot.svg", 15cm, 10cm), p)
+	p
 end
 
 # ╔═╡ e7041002-e206-11ea-3899-6b3a3cfe771f
@@ -248,7 +271,7 @@ holidays = dataset("holidays", "school")
 # ╠═966af7ba-e24b-11ea-333a-eb8734613400
 # ╟─cafd3f0a-e1f2-11ea-2861-fbd429841e67
 # ╠═b7149c2e-e3b7-11ea-387a-9966e5cd6e6a
-# ╠═bd687668-e3b7-11ea-0385-459b528985e1
+# ╠═f64848a0-e76d-11ea-1990-8f4b804f1e9b
 # ╠═e70f6018-e1f7-11ea-0b8f-8d48c9eaa94d
 # ╠═e2e0a582-e1f2-11ea-37e2-236507742cdc
 # ╠═e664290c-e1f2-11ea-27f2-7fbc16af7f19
@@ -261,6 +284,9 @@ holidays = dataset("holidays", "school")
 # ╠═8edd85c0-e206-11ea-36d7-9fb3ce92eb67
 # ╠═9879e5ba-e206-11ea-198c-c93264c4720b
 # ╟─f5e067f6-e24c-11ea-3c3c-bf88fd1de331
+# ╠═5431e8f0-e76a-11ea-25f3-9590a086efd5
+# ╠═0eb86234-e774-11ea-2cd0-0153ffd75aef
+# ╠═4ed9b764-e76f-11ea-3da0-3d9bc46cec0f
 # ╟─ba20f85c-e24c-11ea-3067-5fe2d57baf52
 # ╠═0b899ce4-e2bb-11ea-1a85-7bee36ef0213
 # ╟─0a4c3ee8-e2bd-11ea-0ad0-1de3e6d82689
