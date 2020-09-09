@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.11.7
+# v0.11.12
 
 using Markdown
 using InteractiveUtils
@@ -42,13 +42,12 @@ using Statistics
 
 # ╔═╡ 80ca3a72-e1ec-11ea-14e0-9b6321f69aaf
 md"""
-# Exploring data in julia
+# Exploring Data in Julia
 
 ## TL;DR
 
-**Exploring** the data we crawled before.
-
-Using **visualizations** and correlate to other data to gain some initial **insights**.
+- **Exploring** covid-19 data for Hamburg, Germany.
+- Using **visualizations** to gain some initial **insights**.
 """
 
 # ╔═╡ b715770a-e1f2-11ea-296b-833ff13790b4
@@ -65,6 +64,9 @@ For that purpose, I went ahead and wrote a [small package, Hamburg.jl](https://g
 
 Let's quickly recreate the borough plot we did last time, this time with the help of the package (there won't be much webscraping this time).
 """
+
+# ╔═╡ cb6dda16-e842-11ea-0011-190fbb124136
+Pkg.add(PackageSpec(url="https://github.com/oem/Hamburg.jl"))
 
 # ╔═╡ cafd3f0a-e1f2-11ea-2861-fbd429841e67
 md"""
@@ -159,10 +161,7 @@ begin
 	vstack(plots)
 end
 
-# ╔═╡ 0eb86234-e774-11ea-2cd0-0153ffd75aef
-names(boroughs)
-
-# ╔═╡ 4ed9b764-e76f-11ea-3da0-3d9bc46cec0f
+# ╔═╡ 4f39f0de-f1e7-11ea-31b2-d575723b3f9d
 Gadfly.set_default_plot_size(680px, 300px)
 
 # ╔═╡ ba20f85c-e24c-11ea-3067-5fe2d57baf52
@@ -235,10 +234,10 @@ collapsed = collapse(ta, week, last, mean)
 
 # ╔═╡ 15bf4900-e207-11ea-2a23-7314baaf6a5a
 begin
-	dfa = DataFrame(collapsed)[end-5:end, :]
+	dfa = DataFrame(collapsed)[end-10:end, :]
 
 	avg = layer(x=dfa.timestamp, y=dfa.new, Geom.line, Theme(default_color="red"))
-	plot(avg, plotnewcases(df[1:30, :]),
+	plot(avg, plotnewcases(df[1:60, :]),
 		Coord.cartesian(xmin=Date(2020, 7,1)),
 		Guide.title("Confirmed new COVID-19 cases in Hamburg, Germany"), 
 		Guide.xlabel("date"), 
@@ -266,6 +265,7 @@ holidays = dataset("holidays", "school")
 # ╟─80ca3a72-e1ec-11ea-14e0-9b6321f69aaf
 # ╟─b715770a-e1f2-11ea-296b-833ff13790b4
 # ╠═bef1d414-e1f2-11ea-3005-7d734ef29af8
+# ╠═cb6dda16-e842-11ea-0011-190fbb124136
 # ╠═9fa3d164-e24b-11ea-27c4-f579ca84aac3
 # ╠═9a588752-e24b-11ea-02a3-ad978111b579
 # ╠═966af7ba-e24b-11ea-333a-eb8734613400
@@ -285,8 +285,7 @@ holidays = dataset("holidays", "school")
 # ╠═9879e5ba-e206-11ea-198c-c93264c4720b
 # ╟─f5e067f6-e24c-11ea-3c3c-bf88fd1de331
 # ╠═5431e8f0-e76a-11ea-25f3-9590a086efd5
-# ╠═0eb86234-e774-11ea-2cd0-0153ffd75aef
-# ╠═4ed9b764-e76f-11ea-3da0-3d9bc46cec0f
+# ╠═4f39f0de-f1e7-11ea-31b2-d575723b3f9d
 # ╟─ba20f85c-e24c-11ea-3067-5fe2d57baf52
 # ╠═0b899ce4-e2bb-11ea-1a85-7bee36ef0213
 # ╟─0a4c3ee8-e2bd-11ea-0ad0-1de3e6d82689
